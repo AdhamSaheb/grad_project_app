@@ -1,0 +1,7 @@
+0 Chair
+1 Bed
+2 Table
+3 Wardrobe
+4 Elevator
+5 Stairs
+6 Door
