@@ -1,21 +1,18 @@
-import 'package:camera/camera.dart';
-import 'package:camera/new/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:teachable_machine/Components/AvoidanceCamera.dart';
 import 'package:teachable_machine/Components/Box.dart';
 import 'package:teachable_machine/Components/LiveFeed.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:io';
 import 'dart:math' as math;
 
-class Avoidance extends StatefulWidget {
+class Detection extends StatefulWidget {
   dynamic cameras;
-  Avoidance(this.cameras);
+  Detection(this.cameras);
   @override
-  _AvoidanceState createState() => _AvoidanceState();
+  _DetectionState createState() => _DetectionState();
 }
 
-class _AvoidanceState extends State<Avoidance> {
+class _DetectionState extends State<Detection> {
   bool liveFeed = true;
 
   List<dynamic> _recognitions;
@@ -36,21 +33,12 @@ class _AvoidanceState extends State<Avoidance> {
     Tflite.close();
   }
 
-  // loadCameras() async {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   try {
-  //     widget.cameras = await availableCameras();
-  //   } on CameraException catch (e) {
-  //     print('Error: $e.code\nError Message: $e.message');
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
-
     // loadCameras();
-    _load = true;
+    // _load = true;
+    if (!mounted) return;
 
     loadMyModel().then((v) {
       setState(() {
@@ -77,6 +65,8 @@ class _AvoidanceState extends State<Avoidance> {
         imageStd: 127.5);
 
     setState(() {
+      if (!mounted) return;
+
       _load = false;
       _result = _res;
       print(_result);
@@ -110,18 +100,9 @@ class _AvoidanceState extends State<Avoidance> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   title: Image(
-      //     image: AssetImage('assets/bzu.png'),
-      //     width: 120,
-      //     height: 80,
-      //   ),
-      //   centerTitle: true,
-      // ),
       body: Stack(
         children: [
-          AvoidanceCamera(
+          CameraLiveScreen(
             widget.cameras,
             setRecognitions,
           ),

@@ -1,5 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:teachable_machine/Pages/Detection.dart';
 import 'package:teachable_machine/main.dart';
 import 'package:teachable_machine/Pages/Avoidance.dart';
 
@@ -22,8 +24,8 @@ class _HomeState extends State<Home> {
 
   int _currentIndex = 0;
   final List<dynamic> _children = [
-    FlutterTeachable(cameras),
-    new Container(child: Text('World!'))
+    Avoidance(cameras),
+    Detection(cameras),
   ];
   @override
   Widget build(BuildContext context) {
@@ -45,9 +47,13 @@ class _HomeState extends State<Home> {
         backgroundColor: Hexcolor('#FFFFFF'),
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(
+            activeIcon: new Icon(
               Icons.mail,
               color: Hexcolor('#5f8a49'),
+            ),
+            icon: new Icon(
+              Icons.mail,
+              color: Hexcolor('#000000'),
             ),
             title: new Text(
               'Avoidance',
@@ -57,9 +63,13 @@ class _HomeState extends State<Home> {
             ),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(
+            activeIcon: new Icon(
               Icons.home,
               color: Hexcolor('#5f8a49'),
+            ),
+            icon: new Icon(
+              Icons.home,
+              color: Hexcolor('#000000'),
             ),
             title: new Text(
               'Detection',

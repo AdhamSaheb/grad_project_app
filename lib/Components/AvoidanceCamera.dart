@@ -7,18 +7,18 @@ import 'package:tflite/tflite.dart';
 
 typedef void Callback(List<dynamic> list, int h, int w);
 
-class CameraLiveScreen extends StatefulWidget {
+class AvoidanceCamera extends StatefulWidget {
   final List<CameraDescription> cameras;
   final Callback setRecognitions;
   // final String model;
 
-  CameraLiveScreen(this.cameras, this.setRecognitions);
+  AvoidanceCamera(this.cameras, this.setRecognitions);
 
   @override
-  _CameraLiveScreenState createState() => _CameraLiveScreenState();
+  _AvoidanceCameraState createState() => _AvoidanceCameraState();
 }
 
-class _CameraLiveScreenState extends State<CameraLiveScreen> {
+class _AvoidanceCameraState extends State<AvoidanceCamera> {
   CameraController controller;
   bool isDetecting = false;
 
@@ -87,7 +87,7 @@ class _CameraLiveScreenState extends State<CameraLiveScreen> {
 
   @override
   void dispose() {
-    // controller?.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
