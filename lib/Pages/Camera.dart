@@ -1,4 +1,3 @@
-import 'package:camera/new/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:teachable_machine/Components/Box.dart';
 import 'package:teachable_machine/Components/LiveFeed.dart';
@@ -6,14 +5,17 @@ import 'package:tflite/tflite.dart';
 import 'dart:io';
 import 'dart:math' as math;
 
-class FlutterTeachable extends StatefulWidget {
+class Camera extends StatefulWidget {
   dynamic cameras;
-  FlutterTeachable(this.cameras);
+  String modelName;
+  String assetFile;
+
+  Camera({this.cameras, this.modelName, this.assetFile});
   @override
-  _FlutterTeachableState createState() => _FlutterTeachableState();
+  _CameraState createState() => _CameraState();
 }
 
-class _FlutterTeachableState extends State<FlutterTeachable> {
+class _CameraState extends State<Camera> {
   bool liveFeed = true;
 
   List<dynamic> _recognitions;
@@ -24,24 +26,27 @@ class _FlutterTeachableState extends State<FlutterTeachable> {
   File _pic;
   List _result;
   String _confidence = "";
-  String _fingers = "";
+  String _object = "";
 
   String numbers = '';
 
   @override
   void dispose() {
     super.dispose();
-    Tflite.close();
+    // Tflite.close();
   }
 
   @override
   void initState() {
     super.initState();
-
+    // loadCameras();
     _load = true;
+    if (!mounted) return;
 
     loadMyModel().then((v) {
       setState(() {
+        if (!mounted) return;
+
         _load = false;
       });
     });
@@ -49,7 +54,7 @@ class _FlutterTeachableState extends State<FlutterTeachable> {
 
   loadMyModel() async {
     var res = await Tflite.loadModel(
-        labels: "assets/labels.txt", model: "assets/model.tflite");
+        labels: widget.assetFile, model: widget.modelName);
 
     print("Result after Loading the Model is : $res");
   }
@@ -63,12 +68,14 @@ class _FlutterTeachableState extends State<FlutterTeachable> {
         imageStd: 127.5);
 
     setState(() {
+      if (!mounted) return;
+
       _load = false;
       _result = _res;
       print(_result);
       String str = _result[0]["label"];
 
-      _fingers = str.substring(2);
+      _object = str.substring(2);
       _confidence = _result != null
           ? (_result[0]["confidence"] * 100.0).toString().substring(0, 2) + "%"
           : "";
@@ -82,6 +89,8 @@ class _FlutterTeachableState extends State<FlutterTeachable> {
 
   setRecognitions(recognitions, imageHeight, imageWidth) {
     setState(() {
+      if (!mounted) return;
+
       _recognitions = recognitions;
       _imageHeight = imageHeight;
       _imageWidth = imageWidth;
@@ -94,15 +103,6 @@ class _FlutterTeachableState extends State<FlutterTeachable> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   title: Image(
-      //     image: AssetImage('assets/bzu.png'),
-      //     width: 120,
-      //     height: 80,
-      //   ),
-      //   centerTitle: true,
-      // ),
       body: Stack(
         children: [
           CameraLiveScreen(
