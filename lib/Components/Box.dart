@@ -9,8 +9,8 @@ class EnclosedBox extends StatefulWidget {
   final int previewW;
   final double screenH;
   final double screenW;
-  // final String model;
 
+  // final String model;
   EnclosedBox(
       this.results, this.previewH, this.previewW, this.screenH, this.screenW);
 
@@ -20,6 +20,7 @@ class EnclosedBox extends StatefulWidget {
 
 @override
 void initState() {}
+var previousResult = '';
 
 class _EnclosedBoxState extends State<EnclosedBox> {
   FlutterTts flutterTts = FlutterTts();
@@ -29,12 +30,17 @@ class _EnclosedBoxState extends State<EnclosedBox> {
     return widget.results.map((re) {
       offset = offset + 14;
       flutterTts.setVolume(1);
-      flutterTts.setSpeechRate(1.75);
+      flutterTts.setSpeechRate(2.5);
       flutterTts.setPitch(0.9);
       //speak the result only if confidence is higher  than 90%  (or == 100)
-      if (re["confidence"] * 100 > 90) {
-        Future.delayed(const Duration(milliseconds: 2000), () {
-          flutterTts.speak("${re["label"].toString().substring(2)} ");
+      if (re["confidence"] * 100 > 90 &&
+          re["label"].toString().substring(2) != previousResult) {
+        print(
+            re["label"].toString().substring(2) + "euqlas? " + previousResult);
+
+        flutterTts.speak("${re["label"].toString().substring(2)} ");
+        setState(() {
+          previousResult = re["label"].toString().substring(2);
         });
       }
       return Container(
@@ -48,12 +54,6 @@ class _EnclosedBoxState extends State<EnclosedBox> {
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     color: Hexcolor('#FFFFFF'),
-                    // border: Border(
-                    //   top: BorderSide(
-                    //     color: Hexcolor('#FFFFFF'),
-                    //     width: 3.0,
-                    //   ),
-                    // ),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),

@@ -5,14 +5,17 @@ import 'package:tflite/tflite.dart';
 import 'dart:io';
 import 'dart:math' as math;
 
-class Detection extends StatefulWidget {
+class Camera extends StatefulWidget {
   dynamic cameras;
-  Detection(this.cameras);
+  String modelName;
+  String assetFile;
+
+  Camera({this.cameras, this.modelName, this.assetFile});
   @override
-  _DetectionState createState() => _DetectionState();
+  _CameraState createState() => _CameraState();
 }
 
-class _DetectionState extends State<Detection> {
+class _CameraState extends State<Camera> {
   bool liveFeed = true;
 
   List<dynamic> _recognitions;
@@ -30,14 +33,14 @@ class _DetectionState extends State<Detection> {
   @override
   void dispose() {
     super.dispose();
-    Tflite.close();
+    // Tflite.close();
   }
 
   @override
   void initState() {
     super.initState();
     // loadCameras();
-    // _load = true;
+    _load = true;
     if (!mounted) return;
 
     loadMyModel().then((v) {
@@ -51,7 +54,7 @@ class _DetectionState extends State<Detection> {
 
   loadMyModel() async {
     var res = await Tflite.loadModel(
-        labels: "assets/labels.txt", model: "assets/model.tflite");
+        labels: widget.assetFile, model: widget.modelName);
 
     print("Result after Loading the Model is : $res");
   }

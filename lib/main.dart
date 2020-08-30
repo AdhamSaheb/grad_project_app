@@ -1,8 +1,6 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
-
-import 'package:teachable_machine/Pages/Avoidance.dart';
 import 'package:camera/camera.dart';
 import 'package:teachable_machine/Pages/Home.dart';
 
@@ -20,6 +18,7 @@ Future<Null> main() async {
       title: 'Teachable Machine with Flutter',
       // home: FlutterTeachable(cameras),
       home: Home(cameras),
+      // home: Load(),
       theme: ThemeData(fontFamily: 'Raleway'),
     ),
   );

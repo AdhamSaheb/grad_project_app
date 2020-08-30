@@ -1,12 +1,12 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:teachable_machine/Pages/Detection.dart';
+import 'package:teachable_machine/Pages/Camera.dart';
 import 'package:teachable_machine/main.dart';
-import 'package:teachable_machine/Pages/Avoidance.dart';
 
 class Home extends StatefulWidget {
   dynamic cameras;
+  List<String> modes = ['Avoidance', 'Detection'];
   Home(this.cameras);
   @override
   State<StatefulWidget> createState() {
@@ -15,8 +15,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  FlutterTts flutterTts = FlutterTts();
+
   //Navigation bar function
-  void onTabTapped(int index) {
+  void onTabTapped(int index) async {
+    // super.dispose();
+
+    flutterTts.setSpeechRate(2);
+
+    await flutterTts.speak(widget.modes[index]);
     setState(() {
       _currentIndex = index;
     });
@@ -24,8 +31,19 @@ class _HomeState extends State<Home> {
 
   int _currentIndex = 0;
   final List<dynamic> _children = [
-    Avoidance(cameras),
-    Detection(cameras),
+    // Avoidance(cameras),
+    // new Container(),
+    Camera(
+      cameras: cameras,
+      modelName: "assets/model.tflite",
+      assetFile: "assets/labels.txt",
+    ),
+    Camera(
+      cameras: cameras,
+      modelName: "assets/model.tflite",
+      assetFile: "assets/labels.txt",
+    ),
+    // Detection(cameras),
   ];
   @override
   Widget build(BuildContext context) {
@@ -48,11 +66,11 @@ class _HomeState extends State<Home> {
         items: [
           BottomNavigationBarItem(
             activeIcon: new Icon(
-              Icons.mail,
+              Icons.perm_scan_wifi,
               color: Hexcolor('#5f8a49'),
             ),
             icon: new Icon(
-              Icons.mail,
+              Icons.perm_scan_wifi,
               color: Hexcolor('#000000'),
             ),
             title: new Text(
