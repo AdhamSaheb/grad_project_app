@@ -30,6 +30,7 @@ class _CameraLiveScreenState extends State<CameraLiveScreen> {
       print('No camera is found');
     } else {
       controller = new CameraController(
+        //this is the line of code that can change which camera to open, 0 is the front ( if others are found )
         widget.cameras[0],
         ResolutionPreset.high,
       );
@@ -56,6 +57,7 @@ class _CameraLiveScreenState extends State<CameraLiveScreen> {
                     rotation: 90, // defaults to 90, Android only
                     numResults: 2, // defaults to 5
                     threshold: 0.1, // defaults to 0.1
+
                     asynch: true)
                 .then((recognitions) {
               int endTime = new DateTime.now().millisecondsSinceEpoch;

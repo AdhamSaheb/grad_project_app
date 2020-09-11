@@ -33,7 +33,7 @@ class _CameraState extends State<Camera> {
   @override
   void dispose() {
     super.dispose();
-    // Tflite.close();
+    Tflite.close();
   }
 
   @override
@@ -44,11 +44,7 @@ class _CameraState extends State<Camera> {
     if (!mounted) return;
 
     loadMyModel().then((v) {
-      setState(() {
-        if (!mounted) return;
-
-        _load = false;
-      });
+      setState(() {});
     });
   }
 
@@ -59,33 +55,33 @@ class _CameraState extends State<Camera> {
     print("Result after Loading the Model is : $res");
   }
 
-  applyModelonImage(File file) async {
-    var _res = await Tflite.runModelOnImage(
-        path: file.path,
-        numResults: 2,
-        threshold: 0.5,
-        imageMean: 127.5,
-        imageStd: 127.5);
+  // applyModelonImage(File file) async {
+  //   var _res = await Tflite.runModelOnImage(
+  //       path: file.path,
+  //       numResults: 2,
+  //       threshold: 0.5,
+  //       imageMean: 127.5,
+  //       imageStd: 127.5);
 
-    setState(() {
-      if (!mounted) return;
+  //   setState(() {
+  //     if (!mounted) return;
 
-      _load = false;
-      _result = _res;
-      print(_result);
-      String str = _result[0]["label"];
+  //     _load = false;
+  //     _result = _res;
+  //     print(_result);
+  //     String str = _result[0]["label"];
 
-      _object = str.substring(2);
-      _confidence = _result != null
-          ? (_result[0]["confidence"] * 100.0).toString().substring(0, 2) + "%"
-          : "";
+  //     _object = str.substring(2);
+  //     _confidence = _result != null
+  //         ? (_result[0]["confidence"] * 100.0).toString().substring(0, 2) + "%"
+  //         : "";
 
-      print(str.substring(2));
-      print(
-          (_result[0]["confidence"] * 100.0).toString().substring(0, 2) + "%");
-      print("indexed : ${_result[0]["label"]}");
-    });
-  }
+  //     print(str.substring(2));
+  //     print(
+  //         (_result[0]["confidence"] * 100.0).toString().substring(0, 2) + "%");
+  //     print("indexed : ${_result[0]["label"]}");
+  //   });
+  // }
 
   setRecognitions(recognitions, imageHeight, imageWidth) {
     setState(() {
@@ -101,7 +97,7 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double screenWidth = MediaQuery.of(context).size.width;
-
+    print('Model Running : ' + widget.modelName);
     return Scaffold(
       body: Stack(
         children: [

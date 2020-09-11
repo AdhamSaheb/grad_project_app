@@ -35,8 +35,8 @@ class _EnclosedBoxState extends State<EnclosedBox> {
       //speak the result only if confidence is higher  than 90%  (or == 100)
       if (re["confidence"] * 100 > 90 &&
           re["label"].toString().substring(2) != previousResult) {
-        print(
-            re["label"].toString().substring(2) + "euqlas? " + previousResult);
+        // print(
+        //     re["label"].toString().substring(2) + "euqlas? " + previousResult);
 
         flutterTts.speak("${re["label"].toString().substring(2)} ");
         setState(() {
@@ -51,7 +51,7 @@ class _EnclosedBoxState extends State<EnclosedBox> {
             children: [
               Container(
                 height: widget.screenH / 10,
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(0),
                 decoration: BoxDecoration(
                     color: Hexcolor('#FFFFFF'),
                     borderRadius: BorderRadius.only(
@@ -69,7 +69,7 @@ class _EnclosedBoxState extends State<EnclosedBox> {
                       style: TextStyle(
                         // color: Color.fromRGBO(37, 213, 253, 1.0),
                         color: Hexcolor('#5f8a49'),
-                        fontSize: 35.0,
+                        fontSize: widget.screenW / 25,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

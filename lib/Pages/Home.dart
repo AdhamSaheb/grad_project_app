@@ -3,10 +3,14 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:teachable_machine/Pages/Camera.dart';
 import 'package:teachable_machine/main.dart';
+import 'package:tflite/tflite.dart';
 
 class Home extends StatefulWidget {
   dynamic cameras;
-  List<String> modes = ['Avoidance', 'Detection'];
+  List<String> modes = ['Avoidance Mode', 'Detection Mode'];
+  List<String> models = ["assets/model.tflite", "assets/model2.tflite"];
+  List<String> labels = ["assets/labels.txt", "assets/labels2.txt"];
+
   Home(this.cameras);
   @override
   State<StatefulWidget> createState() {
@@ -19,7 +23,7 @@ class _HomeState extends State<Home> {
 
   //Navigation bar function
   void onTabTapped(int index) async {
-    // super.dispose();
+    //speak the name of the mode
 
     flutterTts.setSpeechRate(2);
 
@@ -27,6 +31,11 @@ class _HomeState extends State<Home> {
     setState(() {
       _currentIndex = index;
     });
+    //load the appropriate model
+    var res = await Tflite.loadModel(
+        labels: widget.labels[index], model: widget.models[index]);
+
+    print("Result after Loading the Model is : $res");
   }
 
   int _currentIndex = 0;
@@ -40,9 +49,10 @@ class _HomeState extends State<Home> {
     ),
     Camera(
       cameras: cameras,
-      modelName: "assets/model.tflite",
-      assetFile: "assets/labels.txt",
+      modelName: "assets/model2.tflite",
+      assetFile: "assets/labels2.txt",
     ),
+
     // Detection(cameras),
   ];
   @override
