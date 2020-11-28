@@ -105,13 +105,13 @@ class _CameraState extends State<Camera> {
             widget.cameras,
             setRecognitions,
           ),
-          EnclosedBox(
-            _recognitions == null ? [] : _recognitions,
-            math.max(_imageHeight, _imageWidth),
-            math.min(_imageHeight, _imageWidth),
-            size.height,
-            size.width,
-          ),
+          // EnclosedBox(
+          //   _recognitions == null ? [] : _recognitions,
+          //   math.max(_imageHeight, _imageWidth),
+          //   math.min(_imageHeight, _imageWidth),
+          //   size.height,
+          //   size.width,
+          // ),
         ],
       ),
     );

@@ -44,8 +44,8 @@ class _HomeState extends State<Home> {
     // new Container(),
     Camera(
       cameras: cameras,
-      modelName: "assets/model.tflite",
-      assetFile: "assets/labels.txt",
+      modelName: "assets/ssd.tflite",
+      assetFile: "assets/ssd_labels.txt",
     ),
     Camera(
       cameras: cameras,

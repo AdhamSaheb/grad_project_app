@@ -46,7 +46,7 @@ class _CameraLiveScreenState extends State<CameraLiveScreen> {
 
             int startTime = new DateTime.now().millisecondsSinceEpoch;
 
-            Tflite.runModelOnFrame(
+            Tflite.detectObjectOnFrame(
                     bytesList: img.planes.map((plane) {
                       return plane.bytes;
                     }).toList(), // required
@@ -55,32 +55,19 @@ class _CameraLiveScreenState extends State<CameraLiveScreen> {
                     imageMean: 127.5, // defaults to 127.5
                     imageStd: 127.5, // defaults to 127.5
                     rotation: 90, // defaults to 90, Android only
-                    numResults: 2, // defaults to 5
                     threshold: 0.1, // defaults to 0.1
 
                     asynch: true)
                 .then((recognitions) {
+              print("Recognitions : " + recognitions.toString());
               int endTime = new DateTime.now().millisecondsSinceEpoch;
               print("Detection took ${endTime - startTime}");
-              Future.delayed(const Duration(milliseconds: 500), () {
-                widget.setRecognitions(recognitions, img.height, img.width);
+              // Future.delayed(const Duration(milliseconds: 500), () {
+              //   widget.setRecognitions(recognitions, img.height, img.width);
 
-                isDetecting = false;
-              });
+              //   isDetecting = false;
+              // });
             });
-            // Tflite.detectObjectOnFrame(
-            //     bytesList: img.planes.map((plane) {
-            //       return plane.bytes;
-            //     }).toList(), // required
-            //     model: "SSDMobileNet",
-            //     imageHeight: img.height,
-            //     imageWidth: img.width,
-            //     imageMean: 127.5, // defaults to 127.5
-            //     imageStd: 127.5, // defaults to 127.5
-            //     rotation: 90, // defaults to 90, Android only
-            //     threshold: 0.1, // defaults to 0.1
-            //     asynch: true // defaults to true
-            //     );
           }
         });
       });
