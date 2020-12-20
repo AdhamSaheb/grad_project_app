@@ -32,7 +32,7 @@ class _CameraLiveScreenState extends State<CameraLiveScreen> {
       controller = new CameraController(
         //this is the line of code that can change which camera to open, 0 is the front ( if others are found )
         widget.cameras[0],
-        ResolutionPreset.high,
+        ResolutionPreset.medium,
       );
       controller.initialize().then((_) {
         if (!mounted) {
@@ -46,7 +46,7 @@ class _CameraLiveScreenState extends State<CameraLiveScreen> {
 
             int startTime = new DateTime.now().millisecondsSinceEpoch;
 
-            Tflite.detectObjectOnFrame(
+            Tflite.runModelOnFrame(
                     bytesList: img.planes.map((plane) {
                       return plane.bytes;
                     }).toList(), // required
@@ -62,11 +62,11 @@ class _CameraLiveScreenState extends State<CameraLiveScreen> {
               print("Recognitions : " + recognitions.toString());
               int endTime = new DateTime.now().millisecondsSinceEpoch;
               print("Detection took ${endTime - startTime}");
-              // Future.delayed(const Duration(milliseconds: 500), () {
-              //   widget.setRecognitions(recognitions, img.height, img.width);
+              Future.delayed(const Duration(milliseconds: 500), () {
+                widget.setRecognitions(recognitions, img.height, img.width);
 
-              //   isDetecting = false;
-              // });
+                isDetecting = false;
+              });
             });
           }
         });

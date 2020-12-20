@@ -44,8 +44,8 @@ class _HomeState extends State<Home> {
     // new Container(),
     Camera(
       cameras: cameras,
-      modelName: "assets/ssd.tflite",
-      assetFile: "assets/ssd_labels.txt",
+      modelName: "assets/model2.tflite",
+      assetFile: "assets/labels2.txt",
     ),
     Camera(
       cameras: cameras,
@@ -67,6 +67,7 @@ class _HomeState extends State<Home> {
         ),
         centerTitle: true,
       ),
+
       body: _children[_currentIndex], // new
 
       bottomNavigationBar: BottomNavigationBar(

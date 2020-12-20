@@ -39,49 +39,7 @@ class _CameraState extends State<Camera> {
   @override
   void initState() {
     super.initState();
-    // loadCameras();
-    _load = true;
-    if (!mounted) return;
-
-    loadMyModel().then((v) {
-      setState(() {});
-    });
   }
-
-  loadMyModel() async {
-    var res = await Tflite.loadModel(
-        labels: widget.assetFile, model: widget.modelName);
-
-    print("Result after Loading the Model is : $res");
-  }
-
-  // applyModelonImage(File file) async {
-  //   var _res = await Tflite.runModelOnImage(
-  //       path: file.path,
-  //       numResults: 2,
-  //       threshold: 0.5,
-  //       imageMean: 127.5,
-  //       imageStd: 127.5);
-
-  //   setState(() {
-  //     if (!mounted) return;
-
-  //     _load = false;
-  //     _result = _res;
-  //     print(_result);
-  //     String str = _result[0]["label"];
-
-  //     _object = str.substring(2);
-  //     _confidence = _result != null
-  //         ? (_result[0]["confidence"] * 100.0).toString().substring(0, 2) + "%"
-  //         : "";
-
-  //     print(str.substring(2));
-  //     print(
-  //         (_result[0]["confidence"] * 100.0).toString().substring(0, 2) + "%");
-  //     print("indexed : ${_result[0]["label"]}");
-  //   });
-  // }
 
   setRecognitions(recognitions, imageHeight, imageWidth) {
     setState(() {
@@ -105,13 +63,13 @@ class _CameraState extends State<Camera> {
             widget.cameras,
             setRecognitions,
           ),
-          // EnclosedBox(
-          //   _recognitions == null ? [] : _recognitions,
-          //   math.max(_imageHeight, _imageWidth),
-          //   math.min(_imageHeight, _imageWidth),
-          //   size.height,
-          //   size.width,
-          // ),
+          EnclosedBox(
+            _recognitions == null ? [] : _recognitions,
+            math.max(_imageHeight, _imageWidth),
+            math.min(_imageHeight, _imageWidth),
+            size.height,
+            size.width,
+          ),
         ],
       ),
     );

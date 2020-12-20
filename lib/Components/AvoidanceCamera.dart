@@ -44,7 +44,7 @@ class _AvoidanceCameraState extends State<AvoidanceCamera> {
             isDetecting = true;
 
             int startTime = new DateTime.now().millisecondsSinceEpoch;
-
+            //this is not where detection happens
             Tflite.runModelOnFrame(
                     bytesList: img.planes.map((plane) {
                       return plane.bytes;
@@ -62,7 +62,7 @@ class _AvoidanceCameraState extends State<AvoidanceCamera> {
               print("Detection took ${endTime - startTime}");
               Future.delayed(const Duration(milliseconds: 500), () {
                 widget.setRecognitions(recognitions, img.height, img.width);
-
+                //print(recognitions);
                 isDetecting = false;
               });
             });

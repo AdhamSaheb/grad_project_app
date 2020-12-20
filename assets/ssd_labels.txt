@@ -71,10 +71,10 @@
 80 toaster
 81 sink
 82 refrigerator
-84 book
-85 clock
-86 vase
-87 scissors
-88 teddy bear
-89 hair drier
-90 toothbrush
+83 book
+84 clock
+85 vase
+86 scissors
+87 teddy bear
+88 hair drier
+89 toothbrush

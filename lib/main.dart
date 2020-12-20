@@ -15,7 +15,7 @@ Future<Null> main() async {
   }
   runApp(
     MaterialApp(
-      title: 'Teachable Machine with Flutter',
+      title: 'Obstacle Avoidance',
       // home: FlutterTeachable(cameras),
       home: Home(cameras),
       // home: Load(),
@@ -23,3 +23,10 @@ Future<Null> main() async {
     ),
   );
 }
+
+/* 
+NOTES in case I forget : 
+1- app calls home 
+2- home has 2 camera widgets 
+3- each camera wiget calls a livefeed widget and passes the cameras and the set Recognitions function
+*/
