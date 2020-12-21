@@ -15,6 +15,7 @@ Future<Null> main() async {
   }
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Obstacle Avoidance',
       // home: FlutterTeachable(cameras),
       home: Home(cameras),
